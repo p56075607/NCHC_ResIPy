@@ -1,0 +1,78 @@
+# 二維地電阻監測資料處理配置檔案
+# 資料輸入設定
+data:
+  input_dir: "dataset_stg/stg_ori" #"dataset_stg/stg_test"  # 輸入資料目錄
+  output_dir: "output"           # 輸出結果目錄
+  supported_formats: [".stg", ".ohm", ".urf"]  # 支援的資料格式
+  terrain_file: null             # 地形檔案路徑 (可選，用於urf轉換)
+  
+# 資料篩選參數
+filter:
+  rho_min: 0.0                   # 最小視電阻率 (歐姆米)
+  reciprocal_error_max: 20.0     # 最大互換誤差百分比
+  
+# 偽剖面繪圖參數
+pseudo_plot:
+  figsize: [12, 8]               # 圖形尺寸 (寬, 高)
+  cmap: "jet"                    # 色彩映射
+  log_scale: true                # 是否使用對數尺度
+  vmin: 32                       # 最小顯示值
+  vmax: 3162                     # 最大顯示值
+  dpi: 300                       # 輸出解析度
+  save_format: "png"             # 儲存格式
+  
+# 網格建立參數
+mesh:
+  type: "trian"                  # 網格類型: "trian" 或 "quad"
+  cl: 0.75                       # 特徵長度
+  cl_factor: 5                   # 特徵長度因子
+  show_output: false             # 是否顯示網格生成輸出
+  # 方形網格參數 (當type="quad"時使用)
+  elemx: 2                       # x方向元素數量因子
+  xgf: 1.5                       # x方向幾何因子
+  zf: 1.1                        # z方向因子
+  zgf: 1.5                       # z方向幾何因子
+  pad: 2                         # 邊界填充
+  
+# 反演參數
+inversion:
+  tolerance: 5                   # 收斂容差
+  max_iterations: 10             # 最大迭代次數
+  parallel: true                 # 是否使用平行運算
+  remove_outliers: true          # 是否移除離群值
+  outlier_threshold: 0.05        # 離群值門檻 (移除最差的5%)
+  
+# 結果繪圖參數
+result_plot:
+  figsize: [12, 8]               # 圖形尺寸
+  color_map: "jet"               # 色彩映射
+  contour: true                  # 是否顯示等高線
+  clip_corners: true             # 是否裁切角落
+  max_depth: 100                 # 最大顯示深度
+  show_sensitivity: false        # 是否顯示敏感度
+  dpi: 300                       # 輸出解析度
+  save_format: "png"             # 儲存格式
+  
+# 輸出設定
+output:
+  save_pseudo_plots: true        # 儲存偽剖面圖
+  save_mesh_plot: true           # 儲存網格圖
+  save_result_plots: true        # 儲存反演結果圖
+  save_error_plots: true         # 儲存誤差圖
+  save_convergence_plot: true    # 儲存收斂圖
+  save_numerical_data: true      # 儲存數值資料
+  data_format: "csv"             # 數值資料格式: "csv" 或 "txt"
+  
+# 時序分析參數
+time_series:
+  create_animation: false        # 是否創建動畫
+  animation_format: "gif"        # 動畫格式
+  frame_duration: 1.0            # 幀間隔 (秒)
+  difference_analysis: true      # 是否進行差值分析
+  reference_index: 0             # 參考時間點索引
+  
+# 日誌設定
+logging:
+  level: "INFO"                  # 日誌等級: DEBUG, INFO, WARNING, ERROR
+  save_log: true                 # 是否儲存日誌檔案
+  log_file: "processing.log"     # 日誌檔案名稱 
