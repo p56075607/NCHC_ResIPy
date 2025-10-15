@@ -11,7 +11,7 @@ sys.path.append(str(current_dir))
 from custom_parser import customStingParser  # 導入自定義解析器
 # %%
 
-data_dir = r'C:\Users\Git\resipy\jupyter-notebook\mycase\dataset_stg\urf_two\converted_ohm'
+data_dir = r'C:\Users\b4-12\Git\NCHC_ResIPy\dataset_stg\stg_test'
 file_format = [f[-4:] for f in os.listdir(data_dir)]
 # Check file format: only accept .ohm .stg and (.urf)
 
@@ -20,11 +20,8 @@ if len(file_format) >= 1 and all(x == file_format[0] for x in file_format):
     # if all same format, Use the batch funtion
     if file_format[0] == '.stg':
         # 使用自定義解析器來處理 .stg 文件
-        for f in os.listdir(data_dir):
-            if f.endswith('.stg'):
-                file_path = os.path.join(data_dir, f)
-                # 使用自定義解析器
-                ERT.createSurvey(file_path, ftype='Sting', parser=customStingParser)
+        # 使用自定義解析器
+        ERT.createBatchSurvey(data_dir, ftype='Sting', parser=customStingParser)
     else:
         ftype = 'BERT' if file_format[0] == '.ohm' else 'Sting'
         ERT.createBatchSurvey(os.path.join(data_dir), ftype=ftype)
@@ -34,12 +31,13 @@ if len(file_format) >= 1 and all(x == file_format[0] for x in file_format):
     ERT.filterAppResist(vmin=0)
     for i in range(len(ERT.surveys)):
         print('Survey {:d}, data numbers: {:d}'.format(i,len(ERT.surveys[i].df)) )
-    ERT.filterRecip(percent=20) # in this case this only removes one quadrupoles with reciprocal error bigger than 20 percent
+    # ERT.filterRecip(percent=20) # in this case this only removes one quadrupoles with reciprocal error bigger than 20 percent
 
     # plot rhoa pseudo-section
     for i in range(len(ERT.surveys)):
         fig, ax = plt.subplots(figsize=(10,5))
         ERT.showPseudo(index = i, ax = ax, cmap='jet',log=True)
+        ax.set_title(f'Survey {i}')
 
     # Fit error model
     # 取交集才能一起畫
@@ -58,9 +56,9 @@ if len(file_format) >= 1 and all(x == file_format[0] for x in file_format):
         ERT.surveys[i].filterData(keep_indices)
         print(ERT.surveys[i])
 
-    fig, ax = plt.subplots()
-    ERT.fitErrorLin(ax=ax,index=-1)
-    # %%
+    # fig, ax = plt.subplots()
+    # ERT.fitErrorLin(ax=ax,index=-1)
+
     # Creat mesh
     ERT.createMesh(typ='trian',cl=0.75,cl_factor=5, show_output=False) # this actually call gmsh.exe to create the mesh
     # ERT.createMesh(typ='quad', elemx=2, xgf=1.5, zf=1.1, zgf=1.5, pad=2)
@@ -68,9 +66,10 @@ if len(file_format) >= 1 and all(x == file_format[0] for x in file_format):
     print('Total node numbers: ',len(ERT.mesh.node))
     print('Total cell numbers: ',len(ERT.mesh.cell_type))
 
-    # %%Inversion
-    ERT.param['tolerance'] = 5
-    ERT.invert(iplot=False,parallel=True)
+    # Inversion
+    ERT.param['tolerance'] = 1
+    ERT.param['a_wgt'] = 0.01
+    ERT.invert(iplot=False,parallel=False)
     print(ERT.summary())
     # Plot convergence curve
     ERT.showRMS()
@@ -83,7 +82,8 @@ if len(file_format) >= 1 and all(x == file_format[0] for x in file_format):
                         clipCorners=True,
                         maxDepth=100,
                         )
-        ax.set_xlim([ERT.elec['x'].min(),ERT.elec['x'].max()])        
+        ax.set_xlim([ERT.elec['x'].min(),ERT.elec['x'].max()])    
+        ax.set_title(f'Survey {i}')    
         # Plot inverison error 
         ERT.showInvError(index = i, )
 

@@ -1,7 +1,7 @@
 # 二維地電阻監測資料處理配置檔案
 # 資料輸入設定
 data:
-  input_dir: "dataset_stg/stg_ori" #"dataset_stg/stg_test"  # 輸入資料目錄
+  input_dir: "dataset_stg/stg_test"  # 輸入資料目錄
   output_dir: "output"           # 輸出結果目錄
   supported_formats: [".stg", ".ohm", ".urf"]  # 支援的資料格式
   terrain_file: null             # 地形檔案路徑 (可選，用於urf轉換)
@@ -36,9 +36,9 @@ mesh:
   
 # 反演參數
 inversion:
-  tolerance: 5                   # 收斂容差
+  tolerance: 1                   # 收斂容差
   max_iterations: 10             # 最大迭代次數
-  parallel: true                 # 是否使用平行運算
+  parallel: false                 # 是否使用平行運算
   remove_outliers: true          # 是否移除離群值
   outlier_threshold: 0.05        # 離群值門檻 (移除最差的5%)
   
