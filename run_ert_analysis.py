@@ -25,8 +25,6 @@ current_dir = Path(__file__).parent
 sys.path.append(str(current_dir))
 
 from ert_time_series_processor import ERTTimeSeriesProcessor
-from time_series_analyzer import TimeSeriesAnalyzer
-
 
 def create_sample_data(output_dir):
     """創建範例資料集結構"""
@@ -63,7 +61,7 @@ def create_sample_data(output_dir):
         'inversion': {
             'tolerance': 5,
             'max_iterations': 10,
-            'parallel': True,
+            'parallel': False,
             'remove_outliers': True,
             'outlier_threshold': 0.05
         },
@@ -146,12 +144,6 @@ def main():
   
   # 執行完整分析
   python run_ert_analysis.py --config config.yaml
-  
-  # 只執行ERT反演，不進行時序分析
-  python run_ert_analysis.py --config config.yaml --no-time-series
-  
-  # 只執行時序分析（需要先有反演結果）
-  python run_ert_analysis.py --config config.yaml --time-series-only
         """
     )
     
@@ -168,19 +160,7 @@ def main():
         metavar='DIR',
         help='創建範例專案結構到指定目錄'
     )
-    
-    parser.add_argument(
-        '--no-time-series',
-        action='store_true',
-        help='跳過時序分析'
-    )
-    
-    parser.add_argument(
-        '--time-series-only',
-        action='store_true',
-        help='只執行時序分析（需要先有ERT反演結果）'
-    )
-    
+        
     parser.add_argument(
         '--verbose', '-v',
         action='store_true',
@@ -220,15 +200,6 @@ def main():
             processor.run_complete_processing()
             print("ERT資料處理完成!")
         
-        if not args.no_time_series and processor.survey_count > 1:
-            # 執行時序分析
-            print("\n開始時序分析...")
-            # analyzer = TimeSeriesAnalyzer(processor, config)
-            # analyzer.run_complete_analysis()
-            print("時序分析完成!")
-        elif processor.survey_count <= 1:
-            print("\n注意: 只有一個測量資料，跳過時序分析")
-        
         print("\n" + "=" * 80)
         print("所有處理完成!")
         print(f"結果已儲存至: {config['data']['output_dir']}")
@@ -246,12 +217,6 @@ def main():
             if subdir_path.exists():
                 file_count = len(list(subdir_path.glob('*')))
                 print(f"  {subdir}: {file_count} 個檔案")
-        
-        # 時序分析結果
-        time_series_dir = output_dir / 'time_series_analysis'
-        if time_series_dir.exists():
-            file_count = len(list(time_series_dir.glob('*')))
-            print(f"  time_series_analysis: {file_count} 個檔案")
         
         # 檢查日誌檔案
         log_file = Path(config['logging']['log_file'])

@@ -234,7 +234,7 @@ grep -i "error\|warning" processing.log
 
 ## 更新日誌
 
-### v1.0.0 (2024)
+### v1.0.0 (2025)
 
 - 初始版本發布
 - 支援STG、OHM、URF格式
@@ -250,5 +250,3 @@ grep -i "error\|warning" processing.log
 ---
 
 *ERT時序監測資料處理系統 v1.0.0*
-*開發者: AI Assistant*
-*最後更新: 2024年*

@@ -38,7 +38,6 @@ mesh:
 inversion:
   tolerance: 1                   # 收斂容差
   max_iterations: 10             # 最大迭代次數
-  parallel: false                 # 是否使用平行運算
   remove_outliers: true          # 是否移除離群值
   outlier_threshold: 0.05        # 離群值門檻 (移除最差的5%)
   

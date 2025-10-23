@@ -13,9 +13,9 @@ config_used:
   inversion:
     max_iterations: 10
     outlier_threshold: 0.05
-    parallel: true
+    parallel: false
     remove_outliers: true
-    tolerance: 3
+    tolerance: 1
   logging:
     level: INFO
     log_file: processing.log
@@ -82,8 +82,8 @@ final_rms: !!python/object/apply:numpy.core.multiarray.scalar
   - -1
   - 0
 - !!binary |
-  3fpgSQa8AEA=
-processing_date: '2025-08-23T20:32:13.456922'
+  KyRyNLE46D8=
+processing_date: '2025-10-15T17:00:15.249617'
 survey_count: 6
 total_elements: 1820
 total_nodes: 972
