@@ -2,7 +2,7 @@
 
 ## Time-lapse 2D ERT Data Processing System
 
-一個完整的二維地電阻監測資料處理系統，支援STG、OHM、URF等多種資料格式，提供從原始資料到時序分析的完整解決方案。
+一個完整的二維地電阻監測資料處理系統，支援STG、OHM、URF等多種資料格式，提供從原始資料到批次處理的完整解決方案。
 
 ## 功能特色
 
@@ -44,7 +44,7 @@ cp /path/to/your/data/*.stg sample_data/
 ### 3. 執行分析
 
 ```bash
-# 執行完整分析（包含時序分析）
+# 執行完整分析
 python run_ert_analysis.py --config sample_config.yaml
 
 # 顯示詳細執行過程
