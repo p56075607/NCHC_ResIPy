@@ -11,20 +11,13 @@
 - **多格式支援**: STG、OHM、URF資料格式自動識別與轉換
 - **雜訊濾除**: 自動移除負電阻率和高互換誤差資料
 - **網格建立**: 支援三角形和方形網格，自動優化
-- **反演計算**: 加權最小二乘法反演，支援平行運算
+- **反演計算**: 加權最小二乘法反演
 
 ### 📊 視覺化功能
 
 - **偽剖面繪製**: 原始資料品質評估
 - **反演結果**: 高品質電阻率剖面圖
 - **誤差分析**: 反演誤差分佈與收斂曲線
-- **時序動畫**: 自動生成時序變化動畫
-
-### 📈 時序分析
-
-- **差值分析**: 自動計算各時間點變化量
-- **統計分析**: 變化趨勢與極值統計
-- **綜合報告**: 自動生成分析報告
 
 ## 快速開始
 
@@ -33,9 +26,6 @@
 ```bash
 # 必要套件
 pip install resipy numpy pandas matplotlib pyyaml pillow
-
-# 可選套件（用於動畫）
-pip install ffmpeg-python
 ```
 
 ### 2. 創建範例專案
@@ -57,9 +47,6 @@ cp /path/to/your/data/*.stg sample_data/
 # 執行完整分析（包含時序分析）
 python run_ert_analysis.py --config sample_config.yaml
 
-# 只執行ERT反演
-python run_ert_analysis.py --config sample_config.yaml --no-time-series
-
 # 顯示詳細執行過程
 python run_ert_analysis.py --config sample_config.yaml --verbose
 ```
@@ -69,7 +56,6 @@ python run_ert_analysis.py --config sample_config.yaml --verbose
 ```
 project/
 ├── config.yaml                    # 配置檔案
-├── custom_parser.py               # STG檔案解析器
 ├── ert_time_series_processor.py  # 主要處理器
 ├── run_ert_analysis.py           # 主執行程式
 ├── sample_data/                   # 輸入資料目錄
@@ -119,9 +105,8 @@ mesh:
 
 ```yaml
 inversion:
-  tolerance: 5                      # 收斂容差
+  tolerance: 1                      # 收斂容差
   max_iterations: 10                # 最大迭代次數
-  parallel: true                    # 平行運算
   remove_outliers: true             # 移除離群值
   outlier_threshold: 0.05           # 離群值門檻(5%)
 ```
@@ -144,13 +129,6 @@ inversion:
 - `resistivity_data_01.csv`: 第1次測量數值資料
 - `processing_summary.yaml`: 處理摘要
 
-### 4. 時序分析 (time_series_analysis/)
-
-- `resistivity_time_series.gif`: 時序動畫
-- `difference_02_vs_01.png`: 變化量分佈圖
-- `change_statistics.csv`: 變化統計資料
-- `change_trends.png`: 變化趨勢圖
-- `analysis_report.md`: 綜合分析報告
 
 ## 進階使用
 
@@ -158,7 +136,6 @@ inversion:
 
 ```python
 from ert_time_series_processor import ERTTimeSeriesProcessor
-from time_series_analyzer import TimeSeriesAnalyzer
 
 # 創建處理器
 processor = ERTTimeSeriesProcessor('config.yaml')
@@ -172,9 +149,6 @@ processor.create_mesh()
 processor.run_inversion()
 processor.plot_results()
 
-# 時序分析
-analyzer = TimeSeriesAnalyzer(processor, processor.config)
-analyzer.run_complete_analysis()
 ```
 
 ### 批次處理多個專案
@@ -205,11 +179,6 @@ done
 3. **記憶體不足**
 
    - 減少 `cl_factor`數值（粗化網格）
-   - 設定 `parallel: false`
-4. **動畫生成失敗**
-
-   - 安裝pillow套件: `pip install pillow`
-   - 檢查時序資料是否充足
 
 ### 日誌分析
 
