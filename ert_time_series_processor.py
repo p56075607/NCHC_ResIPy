@@ -750,7 +750,6 @@ class ERTTimeSeriesProcessor:
         # 執行初始反演
         self.ERT.invert(
             iplot=False,
-            parallel=inversion_config['parallel']
         )
         
         self.logger.info("初始反演完成")
@@ -814,7 +813,7 @@ class ERTTimeSeriesProcessor:
                 self.logger.info(f'測量 {i+1}: 移除 {removed_count} 個離群值')
             
             # 重新反演
-            self.ERT.invert(iplot=False, parallel=inversion_config['parallel'])
+            self.ERT.invert(iplot=False,)
             # 更新誤差欄位供下一輪迭代使用
             try:
                 self.ERT.getInvError()
