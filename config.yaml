@@ -1,7 +1,7 @@
 # 二維地電阻監測資料處理配置檔案
 # 資料輸入設定
 data:
-  input_dir: "input_data"  # 輸入資料目錄
+  input_dir: "dataset_stg/stg_test_once"  # 輸入資料目錄
   output_dir: "output"           # 輸出結果目錄
   supported_formats: [".stg", ".ohm", ".urf"]  # 支援的資料格式
   terrain_file: null             # 地形檔案路徑 (可選)
@@ -14,16 +14,17 @@ filter:
 # 偽剖面繪圖參數
 pseudo_plot:
   figsize: [12, 8]               # 圖形尺寸 (寬, 高)
-  cmap: "jet"                    # 色彩映射
+  cmap: "jet"                    # 色階樣式
   log_scale: true                # 是否使用對數尺度
-  vmin: 32                       # 最小顯示值
-  vmax: 3162                     # 最大顯示值
+  vmin: 32                       # 色階最小顯示值
+  vmax: 3162                     # 色階最大顯示值
   dpi: 300                       # 輸出解析度
   save_format: "png"             # 儲存格式: "jpg" 或 "png"
   
 # 網格建立參數
 mesh:
   type: "trian"                  # 網格類型: "trian" 或 "quad"
+  # 三角網格參數 (當type="train"時使用)
   cl: 0.75                       # 特徵長度
   cl_factor: 5                   # 特徵長度因子
   show_output: false             # 是否顯示網格生成輸出
@@ -45,7 +46,7 @@ inversion:
 result_plot:
   figsize: [12, 8]               # 圖形尺寸
   color_map: "jet"               # 色彩映射
-  contour: true                  # 是否顯示等高線
+  contour: true                  # 是否顯示等高線 
   clip_corners: true             # 是否裁切角落
   max_depth: 100                 # 最大顯示深度
   show_sensitivity: false        # 是否顯示敏感度

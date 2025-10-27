@@ -11,7 +11,7 @@ Main Program for Time-lapse ERT Data Processing
 - 綜合報告生成
 
 作者: CHEN CHUN
-日期: 2024
+日期: 2025
 """
 
 import sys
@@ -194,11 +194,10 @@ def main():
         # 建立ERT處理器
         processor = ERTTimeSeriesProcessor(args.config)
         
-        if not args.time_series_only:
-            # 執行ERT資料處理
-            print("開始ERT資料處理...")
-            processor.run_complete_processing()
-            print("ERT資料處理完成!")
+        # 執行ERT資料處理
+        print("開始ERT資料處理...")
+        processor.run_complete_processing()
+        print("ERT資料處理完成!")
         
         print("\n" + "=" * 80)
         print("所有處理完成!")

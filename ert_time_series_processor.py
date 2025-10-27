@@ -13,7 +13,7 @@ Time-lapse 2D ERT Data Processing System
 - 反演誤差分析
 
 作者: CHEN CHUN
-日期: 2024
+日期: 2025
 """
 
 import os
@@ -861,6 +861,10 @@ class ERTTimeSeriesProcessor:
                 clipCorners=result_config['clip_corners'],
                 maxDepth=result_config['max_depth']
             )
+
+            # 如果是 contour=True 且需要加強角落裁切，手動加強裁切效果
+            if result_config['contour'] and result_config['clip_corners']:
+                self._enhance_corner_clipping(ax, i)
             
             # 設置X軸範圍
             ax.set_xlim([self.ERT.elec['x'].min(), self.ERT.elec['x'].max()])
@@ -883,6 +887,37 @@ class ERTTimeSeriesProcessor:
         if self.config['output']['save_error_plots']:
             self._plot_inversion_errors()
     
+    def _enhance_corner_clipping(self, ax, index):
+        """加強角落裁切效果（針對 contour=True 的情況）"""
+        try:
+            # 獲取電極位置
+            elec_x = self.ERT.elec['x'].values
+            elec_z = self.ERT.elec['z'].values
+            elec_xmin, elec_xmax = np.min(elec_x), np.max(elec_x)
+            
+            # 創建更嚴格的角落遮罩
+            from matplotlib.patches import Polygon
+            import matplotlib.patches as patches
+            
+            # 計算角落裁切的幾何形狀（基於 ResIPy 的邏輯）
+            if hasattr(self.ERT, 'trapeziod') and self.ERT.trapeziod is not None:
+                # 使用 ResIPy 計算的梯形遮罩
+                trap_vertices = self.ERT.trapeziod
+                
+                # 為每個等值線集合添加更嚴格的裁切
+                for collection in ax.collections:
+                    if hasattr(collection, 'set_clip_path'):
+                        # 創建裁切路徑
+                        clip_path = patches.Polygon(trap_vertices, 
+                                                facecolor='none', 
+                                                edgecolor='none',
+                                                transform=ax.transData)
+                        ax.add_patch(clip_path)
+                        collection.set_clip_path(clip_path)
+            
+        except Exception as e:
+            self.logger.warning(f"加強角落裁切失敗: {str(e)}")
+            
     def _plot_inversion_errors(self):
         """繪製反演誤差"""
         self.logger.info("繪製反演誤差...")

@@ -8,10 +8,10 @@ from pathlib import Path
 import sys
 current_dir = Path(__file__).parent
 sys.path.append(str(current_dir))
-from custom_parser import customStingParser  # 導入自定義解析器
+from ert_time_series_processor import customStingParser  # 導入自定義解析器
 # %%
 
-data_dir = r'C:\Users\b4-12\Git\NCHC_ResIPy\dataset_stg\stg_test'
+data_dir = r'C:\Users\b4-12\Git\NCHC_ResIPy\dataset_stg\stg_test_once'
 file_format = [f[-4:] for f in os.listdir(data_dir)]
 # Check file format: only accept .ohm .stg and (.urf)
 

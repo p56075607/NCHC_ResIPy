@@ -1,6 +1,6 @@
 config_used:
   data:
-    input_dir: dataset_stg/stg_test
+    input_dir: dataset_stg/stg_test_once
     output_dir: output
     supported_formats:
     - .stg
@@ -13,7 +13,6 @@ config_used:
   inversion:
     max_iterations: 10
     outlier_threshold: 0.05
-    parallel: false
     remove_outliers: true
     tolerance: 1
   logging:
@@ -59,13 +58,7 @@ config_used:
     max_depth: 100
     save_format: png
     show_sensitivity: false
-  time_series:
-    animation_format: gif
-    create_animation: false
-    difference_analysis: true
-    frame_duration: 1.0
-    reference_index: 0
-convergence_status: 6
+convergence_status: 1
 final_rms: !!python/object/apply:numpy.core.multiarray.scalar
 - !!python/object/apply:numpy.dtype
   args:
@@ -82,8 +75,8 @@ final_rms: !!python/object/apply:numpy.core.multiarray.scalar
   - -1
   - 0
 - !!binary |
-  KyRyNLE46D8=
-processing_date: '2025-10-15T17:00:15.249617'
-survey_count: 6
+  NrjIBHV86T8=
+processing_date: '2025-10-27T14:18:22.740058'
+survey_count: 1
 total_elements: 1820
 total_nodes: 972
