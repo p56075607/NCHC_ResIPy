@@ -56,6 +56,9 @@ python run_ert_analysis.py --config sample_config.yaml --verbose
 ```
 project/
 ├── config.yaml                    # 配置檔案
+├── src/                           # 程式碼路徑
+│   ├── ert_time_series_processor.py
+│   └── run_ert_analysis.py
 ├── ert_time_series_processor.py  # 主要處理器
 ├── run_ert_analysis.py           # 主執行程式
 ├── sample_data/                   # 輸入資料目錄

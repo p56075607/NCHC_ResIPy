@@ -605,7 +605,7 @@ class ERTTimeSeriesProcessor:
                 vmax=plot_config['vmax'] if not plot_config['log_scale'] else np.log10(plot_config['vmax'])
             )
             
-            
+            ax.set_title(f'Pseudo Section of survey {i}')
             # 儲存圖片
             filename = f'pseudo_section_{i+1:02d}.{plot_config["save_format"]}'
             filepath = output_dir / filename
