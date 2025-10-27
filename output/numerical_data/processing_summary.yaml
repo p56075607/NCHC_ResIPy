@@ -45,8 +45,8 @@ config_used:
     - 8
     log_scale: true
     save_format: png
-    vmax: 3162
-    vmin: 32
+    vmax: 3000
+    vmin: 30
   result_plot:
     clip_corners: true
     color_map: jet
@@ -55,9 +55,12 @@ config_used:
     figsize:
     - 12
     - 8
+    log_scale: true
     max_depth: 100
     save_format: png
     show_sensitivity: false
+    vmax: 3000
+    vmin: 30
 convergence_status: 1
 final_rms: !!python/object/apply:numpy.core.multiarray.scalar
 - !!python/object/apply:numpy.dtype
@@ -75,8 +78,8 @@ final_rms: !!python/object/apply:numpy.core.multiarray.scalar
   - -1
   - 0
 - !!binary |
-  NrjIBHV86T8=
-processing_date: '2025-10-27T14:18:22.740058'
+  BgxPzrRv6z8=
+processing_date: '2025-10-27T16:01:51.964389'
 survey_count: 1
 total_elements: 1820
 total_nodes: 972

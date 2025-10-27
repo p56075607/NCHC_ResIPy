@@ -16,8 +16,8 @@ pseudo_plot:
   figsize: [12, 8]               # 圖形尺寸 (寬, 高)
   cmap: "jet"                    # 色階樣式
   log_scale: true                # 是否使用對數尺度
-  vmin: 32                       # 色階最小顯示值
-  vmax: 3162                     # 色階最大顯示值
+  vmin: 30                       # 色階最小顯示值
+  vmax: 3000                     # 色階最大顯示值
   dpi: 300                       # 輸出解析度
   save_format: "png"             # 儲存格式: "jpg" 或 "png"
   
@@ -48,6 +48,9 @@ result_plot:
   color_map: "jet"               # 色彩映射
   contour: true                  # 是否顯示等高線 
   clip_corners: true             # 是否裁切角落
+  log_scale: true                # 是否使用對數尺度
+  vmin: 30                       # 色階最小顯示值
+  vmax: 3000                     # 色階最大顯示值
   max_depth: 100                 # 最大顯示深度
   show_sensitivity: false        # 是否顯示敏感度
   dpi: 300                       # 輸出解析度

@@ -239,6 +239,16 @@ class ERTTimeSeriesProcessor:
     def _setup_directories(self):
         """建立輸出目錄"""
         output_dir = Path(self.config['data']['output_dir'])
+
+        if output_dir.exists() and self.config.get('output', {}).get('clear_output_before_run', True):
+            import shutil
+            self.logger.info(f"清空現有輸出目錄: {output_dir}")
+            try:
+                shutil.rmtree(output_dir)
+                self.logger.info("輸出目錄已清空")
+            except Exception as e:
+                self.logger.warning(f"清空輸出目錄時發生錯誤: {str(e)}")
+
         output_dir.mkdir(exist_ok=True)
         
         # 建立子目錄
@@ -845,8 +855,19 @@ class ERTTimeSeriesProcessor:
         result_config = self.config['result_plot']
         output_dir = Path(self.config['data']['output_dir']) / 'result_plots'
         
+        # 計算色階範圍
+        vmin_config = result_config['vmin']
+        vmax_config = result_config['vmax'] 
+        log_scale = result_config['log_scale']
+        
+        if log_scale:
+            vmin_display = np.log10(vmin_config)
+            vmax_display = np.log10(vmax_config)
+        else:
+            vmin_display = vmin_config
+            vmax_display = vmax_config
+        
         for i in range(available_results):
-            # 繪製電阻率結果
             fig, ax = plt.subplots(figsize=result_config['figsize'])
             
             self.ERT.showResults(
@@ -855,12 +876,30 @@ class ERTTimeSeriesProcessor:
                 attr='Resistivity(log10)',
                 sens=result_config['show_sensitivity'],
                 contour=result_config['contour'],
-                vmin=np.log10(self.config['pseudo_plot']['vmin']),
-                vmax=np.log10(self.config['pseudo_plot']['vmax']),
+                vmin=vmin_display,
+                vmax=vmax_display,
                 color_map=result_config['color_map'],
                 clipCorners=result_config['clip_corners'],
                 maxDepth=result_config['max_depth']
             )
+
+            # 強制設置色階條範圍
+            mesh_result = self.ERT.meshResults[i]
+            if hasattr(mesh_result, 'cbar') and mesh_result.cbar is not None:
+                # 設置色階條範圍
+                mesh_result.cbar.mappable.set_clim(vmin=vmin_display, vmax=vmax_display)
+                
+                # 設置刻度標籤（如果是對數尺度）
+                if log_scale:
+                    # 創建均勻分布的刻度
+                    n_ticks = 11  # 刻度數量
+                    tick_positions = np.linspace(vmin_display, vmax_display, n_ticks)
+                    tick_labels = [f'{10**pos:.0f}' if pos >= 2 else f'{10**pos:.1f}' 
+                                 for pos in tick_positions]
+                    mesh_result.cbar.set_ticks(tick_positions)
+                    mesh_result.cbar.set_ticklabels(tick_labels)
+                
+                self.logger.info(f'色階條範圍已設置為: {vmin_display:.3f} - {vmax_display:.3f}')
 
             # 如果是 contour=True 且需要加強角落裁切，手動加強裁切效果
             if result_config['contour'] and result_config['clip_corners']:
@@ -868,6 +907,7 @@ class ERTTimeSeriesProcessor:
             
             # 設置X軸範圍
             ax.set_xlim([self.ERT.elec['x'].min(), self.ERT.elec['x'].max()])
+            ax.set_title(f'Survey {i}')
             
             # 儲存結果圖
             filename = f'resistivity_{i+1:02d}.{result_config["save_format"]}'
