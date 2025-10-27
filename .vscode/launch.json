@@ -9,7 +9,7 @@
             "name": "Python: 運行腳本 time-lapse ERT inversion",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/run_ert_analysis.py",
+            "program": "${workspaceFolder}/src/run_ert_analysis.py",
             "args": ["--config", "config.yaml"],
             "console": "integratedTerminal",
             "justMyCode": false

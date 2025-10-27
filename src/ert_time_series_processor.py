@@ -185,7 +185,7 @@ def customStingParser(fname):
     return elec, df 
 
 class ERTTimeSeriesProcessor:
-    """ERT時序資料處理器"""
+    """時序ERT資料處理器"""
     
     def __init__(self, config_file='config.yaml'):
         """
@@ -1048,9 +1048,9 @@ class ERTTimeSeriesProcessor:
                         continue
                     
                     # 獲取座標資訊
-                    if 'X' in mesh_result.columns and 'Y' in mesh_result.columns:
+                    if 'X' in mesh_result.columns and 'Z' in mesh_result.columns:
                         x_coords = mesh_result['X'].values
-                        z_coords = mesh_result['Y'].values  # ResIPy中Y通常代表深度/高程
+                        z_coords = mesh_result['Z'].values  # ResIPy中Z通常代表深度/高程
                     elif 'x' in mesh_result.columns and 'z' in mesh_result.columns:
                         x_coords = mesh_result['x'].values
                         z_coords = mesh_result['z'].values
@@ -1126,7 +1126,7 @@ class ERTTimeSeriesProcessor:
         """執行完整的處理流程"""
         try:
             self.logger.info("=" * 60)
-            self.logger.info("開始ERT時序資料處理")
+            self.logger.info("開始時序ERT資料處理")
             self.logger.info("=" * 60)
             
             # 1. 載入資料
@@ -1160,7 +1160,7 @@ class ERTTimeSeriesProcessor:
             self.save_numerical_data()
             
             self.logger.info("=" * 60)
-            self.logger.info("ERT時序資料處理完成")
+            self.logger.info("時序ERT資料處理完成")
             self.logger.info("=" * 60)
             
         except Exception as e:
