@@ -1,7 +1,7 @@
 # 二維地電阻監測資料處理配置檔案
 # 資料輸入設定
 data:
-  input_dir: "dataset_stg/stg_test"  # 輸入資料目錄
+  input_dir: "input_data"  # 輸入資料目錄
   output_dir: "output"           # 輸出結果目錄
   supported_formats: [".stg", ".ohm", ".urf"]  # 支援的資料格式
   terrain_file: null             # 地形檔案路徑 (可選)
