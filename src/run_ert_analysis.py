@@ -6,9 +6,7 @@ Main Program for Time-lapse ERT Data Processing
 
 功能包含：
 - 完整的ERT資料處理流程
-- 時序分析與動畫製作
 - 自動化批次處理
-- 綜合報告生成
 
 作者: CHEN CHUN
 日期: 2025
