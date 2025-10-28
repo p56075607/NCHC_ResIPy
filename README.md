@@ -57,9 +57,7 @@ python run_ert_analysis.py --config sample_config.yaml --verbose
 project/
 ├── run.bat                          # 執行檔
 ├── config.yaml                      # 配置檔案
-├── src/                             # 程式碼路徑
-│   ├── ert_time_series_processor.py
-│   └── run_ert_analysis.py
+├── src/run_ert_analysis.py          # 程式碼路徑
 ├── input_data/                      # 輸入資料目錄
 │   ├── survey_01.stg
 │   ├── survey_02.stg
