@@ -59,8 +59,8 @@ project/
 ├── config.yaml                      # 配置檔案
 ├── src/run_ert_analysis.py          # 程式碼路徑
 ├── input_data/                      # 輸入資料目錄
-│   ├── survey_01.stg
-│   ├── survey_02.stg
+│   ├── 24100806_m_E1_trial1.stg
+│   ├── 24100912_m_E1_trial1.stg
 │   └── ...
 └── output_files/                    # 輸出結果目錄
     ├── pseudo_plots/                # 偽剖面圖
