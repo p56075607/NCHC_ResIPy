@@ -16,18 +16,15 @@ Time-lapse 2D ERT Data Processing System
 日期: 2025
 """
 
-import os
 import sys
 import yaml
 import logging
-import pickle
 from datetime import datetime
 from pathlib import Path
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 plt.rcParams['font.family'] = 'Microsoft YaHei'
-from matplotlib.animation import FuncAnimation
 import warnings
 warnings.filterwarnings('ignore')
 

@@ -55,23 +55,22 @@ python run_ert_analysis.py --config sample_config.yaml --verbose
 
 ```
 project/
-├── config.yaml                    # 配置檔案
-├── src/                           # 程式碼路徑
+├── run.bat                          # 執行檔
+├── config.yaml                      # 配置檔案
+├── src/                             # 程式碼路徑
 │   ├── ert_time_series_processor.py
 │   └── run_ert_analysis.py
-├── ert_time_series_processor.py  # 主要處理器
-├── run_ert_analysis.py           # 主執行程式
-├── sample_data/                   # 輸入資料目錄
+├── input_data/                      # 輸入資料目錄
 │   ├── survey_01.stg
 │   ├── survey_02.stg
 │   └── ...
-└── output/                        # 輸出結果目錄
-    ├── pseudo_plots/              # 偽剖面圖
-    ├── mesh_plots/                # 網格圖
-    ├── result_plots/              # 反演結果圖
-    ├── error_plots/               # 誤差分析圖
-    ├── convergence_plots/         # 收斂曲線
-    └── numerical_data/            # 數值資料
+└── output_files/                    # 輸出結果目錄
+    ├── pseudo_plots/                # 偽剖面圖
+    ├── mesh_plots/                  # 網格圖
+    ├── result_plots/                # 反演結果圖
+    ├── error_plots/                 # 誤差分析圖
+    ├── convergence_plots/           # 收斂曲線
+    └── numerical_data/              # 數值資料
 
 ```
 

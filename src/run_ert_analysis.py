@@ -15,7 +15,6 @@ Main Program for Time-lapse ERT Data Processing
 """
 
 import sys
-import os
 import argparse
 from pathlib import Path
 import yaml
