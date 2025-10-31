@@ -427,10 +427,24 @@ class ERTTimeSeriesProcessor:
         # 檢查檔案格式
         files = list(input_dir.glob('*'))
         data_files = []
+        unsupported_files = []
         
         for file in files:
-            if file.suffix in self.config['data']['supported_formats']:
-                data_files.append(file)
+            if file.is_file():  # 只檢查檔案，忽略目錄
+                if file.suffix in self.config['data']['supported_formats']:
+                    data_files.append(file)
+                else:
+                    unsupported_files.append(file)
+        
+        # 如果有任何不支援的檔案格式，立即報錯
+        if unsupported_files:
+            unsupported_list = '\n'.join([f"  - {f.name} (副檔名: {f.suffix})" for f in unsupported_files])
+            supported_formats = ', '.join(self.config['data']['supported_formats'])
+            raise ValueError(
+                f"發現不支援的檔案格式！\n"
+                f"不支援的檔案:\n{unsupported_list}\n"
+                f"支援的格式: {supported_formats}"
+            )
         
         if not data_files:
             raise ValueError(f"在 {input_dir} 中找不到支援的資料檔案")
@@ -489,6 +503,14 @@ class ERTTimeSeriesProcessor:
     def create_surveys(self, data_files, file_format):
         """建立測量專案"""
         self.ERT = Project(typ='R2')
+        
+        # 印出將要載入的檔案列表
+        self.logger.info("=" * 60)
+        self.logger.info(f"準備載入 {len(data_files)} 個資料檔案:")
+        for i, file in enumerate(data_files, 1):
+            filename = Path(file).name
+            self.logger.info(f"  測量 {i}: {filename}")
+        self.logger.info("=" * 60)
         
         if file_format == '.stg':
             if len(data_files) > 1:
